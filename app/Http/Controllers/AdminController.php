@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repositories\PostRepository;
 
@@ -23,7 +24,7 @@ class AdminController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = User::create([$request->validated()]);
+        $user = User::create($request->validated());
 
         return response()->json($user);
     }
@@ -39,9 +40,12 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CreateUserRequest $request, User $user)
+    public function update(EditUserRequest $request, User $user)
     {
-        $user = $user->update($request->validated());
+        foreach ($request->validated() as $field => $value) {
+            $user->{$field} = $value;
+        }
+        $user->save();
         return response()->json($user);
     }
 

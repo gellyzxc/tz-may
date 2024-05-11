@@ -23,6 +23,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('user', [UserController::class, 'me']);
     Route::get('post/my', [PostController::class, 'my']);
     Route::apiResource('post', PostController::class);
 

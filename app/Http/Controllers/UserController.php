@@ -40,4 +40,11 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function me()
+    {
+        $user = Auth::user();
+
+        return response()->json($user);
+    }
+
 }
