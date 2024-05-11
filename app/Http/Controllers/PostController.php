@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data = $this->repository->with('user')->where('archived', false)->paginate(20);
+        $data = $this->repository->with('user:id,name')->where('archived', false)->paginate(20);
         return response()->json($data);
     }
 
@@ -52,7 +52,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $data = $this->repository->getById($post->id)->load('user');
+        $data = $this->repository->getById($post->id)->load('user:id,name');
         return response()->json($data);
     }
 
