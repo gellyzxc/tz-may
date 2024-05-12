@@ -14,11 +14,10 @@ class PostController extends Controller
 
     private $repository;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware('role:admin,writer')->only([
-            'update', 'store', 'destroy'
-        ]);
+        $method = $request->route()->action['as']; // название роута в ресурсном контроллере
+        $this->middleware("permission:$method");
 
         $this->repository = new PostRepository();
     }
@@ -28,6 +27,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        // dd(Auth::user()->permissions);
         $data = $this->repository->with('user:id,name')->where('archived', false)->paginate(20);
         return response()->json($data);
     }

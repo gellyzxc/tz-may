@@ -6,15 +6,23 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repositories\PostRepository;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $method = $request->route()->action['as']; // название роута в ресурсном контроллере
+        $this->middleware("permission:$method");
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = User::all();
+        $data = User::with('roles:name')->get();
 
         return response()->json($data);
     }
@@ -25,6 +33,8 @@ class AdminController extends Controller
     public function store(CreateUserRequest $request)
     {
         $user = User::create($request->validated());
+
+        $user->assignRole($request->type);
 
         return response()->json($user);
     }
