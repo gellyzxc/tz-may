@@ -24,10 +24,10 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', [UserController::class, 'me']);
-    Route::get('post/my', [PostController::class, 'my']);
+    Route::get('post/my', [PostController::class, 'my'])->name('post.my');
     Route::apiResource('post', PostController::class);
 
-    Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function () {
+    Route::group(['prefix' => 'admin'], function () {
         Route::apiResource('user', AdminController::class);
     });
 });
