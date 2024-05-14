@@ -13,8 +13,7 @@ class AdminController extends Controller
 
     public function __construct(Request $request)
     {
-        $method = $request->route()->action['as']; // название роута в ресурсном контроллере
-        $this->middleware("permission:$method");
+        $this->middleware("role:admin");
     }
 
     /**

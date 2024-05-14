@@ -14,9 +14,9 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = ['user.store', 'user.update', 'user.destroy', 'user.index', 'user.show', 'post.store', 'post.update', 'post.destroy', 'post.index', 'post.show', 'post.my'];
+        $permissions = ['*', 'post.store', 'post.update', 'post.destroy', 'post.index', 'post.show', 'post.my'];
         $roles = [
-            'admin' => ['user.store', 'user.update', 'user.destroy', 'user.index', 'user.show', 'post.store', 'post.update', 'post.destroy', 'post.index', 'post.show', 'post.my'],
+            'admin' => ['*', 'post.store', 'post.update', 'post.destroy', 'post.index', 'post.show', 'post.my'],
             'writer' => ['post.store', 'post.update', 'post.destroy', 'post.index', 'post.show', 'post.my'],
             'user' => ['post.index', 'post.show']
         ];
